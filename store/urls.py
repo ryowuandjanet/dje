@@ -16,4 +16,6 @@ urlpatterns = [
     # 如果在localhost:3000沒有作動，就把port改成3001
     path('add-to-cart', cart.addtocart, name='addtocart'),
     path('cart', cart.viewcart, name="cart"),
+    path('update-cart', cart.updatecart, name="updatecart"),
+    path('delete-cart-item', cart.deletecartitem, name="deletecartitem"),
 ]
