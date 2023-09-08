@@ -25,7 +25,7 @@ $(document).ready(function(){
 
   $('.addToCartBtn').click(function(e){
     e.preventDefault();
-    console.log('click');
+    console.log('click cart');
     var product_id = $(this).closest('.product_data').find('.prod_id').val()
     var product_qty = $(this).closest('.product_data').find('.qty-input').val()
     var token = $('input[name=csrfmiddlewaretoken]').val()
@@ -39,6 +39,24 @@ $(document).ready(function(){
       },
       success: function (response) {
         console.log(response)
+        alertify.success(response.status)
+      }
+    })
+  })
+
+  $('.addToWishlist').click(function(e){
+    e.preventDefault();
+    console.log('click wishlist');
+    var product_id = $(this).closest('.product_data').find('.prod_id').val()
+    var token = $('input[name=csrfmiddlewaretoken]').val()
+    $.ajax({
+      method: "POST",
+      url: "/add-to-wishlist",
+      data: {
+        "product_id":product_id,
+        csrfmiddlewaretoken: token
+      },
+      success: function (response) {
         alertify.success(response.status)
       }
     })
@@ -80,6 +98,26 @@ $(document).ready(function(){
         alertify.success(response.status)
         // 後面要空一格才可以，" .cartdata"
         $('.cartdata').load(location.href + " .cartdata")
+      }
+    })
+  })
+
+  $(document).on('click','.delete-wishlist-item',function(e){
+    e.preventDefault();
+    console.log('delete-cart-item')
+    var product_id = $(this).closest('.product_data').find('.prod_id').val()
+    var token = $('input[name=csrfmiddlewaretoken]').val()
+    $.ajax({
+      method: "POST",
+      url: "delete-wishlist-item",
+      data: {
+        "product_id":product_id,
+        csrfmiddlewaretoken: token
+      },
+      success: function (response) {
+        alertify.success(response.status)
+        // 後面要空一格才可以，" .wishdata"
+        $('.wishdata').load(location.href + " .wishdata")
       }
     })
   })
