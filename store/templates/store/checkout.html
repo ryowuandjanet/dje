@@ -102,6 +102,7 @@
               <div class="mt-3">
                 <button type="submit" class="btn btn-success w-100"> COD | Place Order </button>
                 <button type="button" class="btn btn-primary payWithRazorpay w-100 mt-2"> Pay with Razorpay </button>
+                <div id="paypal-button-container" class="mt-2"></div>
               </div>
             {% else %}
               <h4>Your cart is empty</h4>
@@ -119,4 +120,78 @@
 {% block scripts %}
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://www.paypal.com/sdk/js?client-id=AQ_Z8EfrHtGKaVwXTSFy4TyIVSpmlzN8VIFHybK9QPT4U6_6wgvBMm1hwUSofgGHlywcouJxwzu_R_Mv&currency=USD"></script>
+  <script>
+    paypal.Buttons({
+      style: {
+        layout: 'vertical',
+        color: 'gold',
+        shape: 'rect'
+      },
+      onClick : function(data, actions){
+        var fname = $("[name='fname']").val()
+        var lname = $("[name='lname']").val()
+        var email = $("[name='email']").val()
+        var phone = $("[name='phone']").val()
+        var address = $("[name='address']").val()
+        var city = $("[name='city']").val()
+        var state = $("[name='state']").val()
+        var country = $("[name='country']").val()
+        var pincode = $("[name='pincode']").val()
+        var token = $("[name='csrfmiddlewaretoken']").val()
+
+        if(fname == "" || lname == "" || email == "" || phone == "" || address == "" || city == "" || state == "" || country == "" || pincode == "")
+        {
+          Swal.fire("Alert!","All fields are mandatory !","error")
+          return false
+        }
+        else{
+          return true
+        }
+      },
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [
+            {
+              amount: {
+                value: '0.01',//`{{ total_price | stringformat:'d' }}`
+              }
+            }
+          ]
+        })
+      },
+      onApprove: function(data,actions){
+        return actions.order.capture().then(function(orderData){
+          console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+          alert(orderData.id)
+          // var transaction = orderData.purchase_units[0].payments.captures[0]
+          // alert('Transaction' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details')
+          data = {
+            "fname": fname,
+            "lname": lname,
+            "email": email,
+            "phone": phone,
+            "address": address,
+            "city": city,
+            "state": state,
+            "country": country,
+            "pincode": pincode,
+            "payment_mode": "Paid by PayPal",
+            "payment_id": orderData.id,
+            csrfmiddlewaretoken: token
+          }
+          $.ajax({
+            method: "POST",
+            url: "/place-order",
+            data: data,
+            success: function(responsec){
+              Swal.fire("Congratulations!",responsec.status,"success").then((value) => {
+                window.location.href = 'my-orders'
+              })
+            }
+          })
+        })
+      }
+    }).render('#paypal-button-container')
+  </script>
 {% endblock scripts %}
