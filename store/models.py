@@ -50,6 +50,7 @@ class Cart(models.Model):
   user = models.ForeignKey(User,on_delete=models.CASCADE)
   product = models.ForeignKey(Product, on_delete=models.CASCADE)
   product_qty = models.IntegerField(null=False,blank=False)
+  remark = models.TextField(blank=True, null=True)  # 添加remark字段
   created_at = models.DateTimeField(auto_now_add=True)
 
 class Wishlist(models.Model):
@@ -89,6 +90,7 @@ class OrderItem(models.Model):
   order = models.ForeignKey(Order, on_delete=models.CASCADE)
   product = models.ForeignKey(Product, on_delete=models.CASCADE)
   price = models.FloatField(null=False)
+  remark = models.TextField(blank=True, null=True)  # 添加remark字段
   quantity = models.IntegerField(null=False)
 
   def __str__(self):

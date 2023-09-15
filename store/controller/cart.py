@@ -16,9 +16,11 @@ def addtocart(request):
           return JsonResponse({'status':'Product Already in Cart'})
         else:
           prod_qty = int(request.POST.get('product_qty'))
+          remark =request.POST.get('remark')
+          print(remark)
 
           if product_check.quantity >= prod_qty:
-            Cart.objects.create(user=request.user, product_id=prod_id, product_qty=prod_qty)
+            Cart.objects.create(user=request.user, product_id=prod_id, product_qty=prod_qty,remark=remark)
             return JsonResponse({'status':'Product added successfully'})
           else:
             return JsonResponse({'status':"Only "+str(product_check.quantity)+' quantity available'})
@@ -39,10 +41,23 @@ def updatecart(request):
     prod_id = int(request.POST.get('product_id'))
     if(Cart.objects.filter(user=request.user, product_id=prod_id)):
       prod_qty = int(request.POST.get('product_qty'))
+      remark = request.POST.get('remark')
       cart = Cart.objects.get(product_id=prod_id, user=request.user)
       cart.product_qty = prod_qty
+      cart.remark = remark
       cart.save()
-      return JsonResponse({'status':'updateed Successfully'})
+      return JsonResponse({'status':'updateed Qty Successfully'})
+  return redirect('/')
+
+def updateremark(request):
+  if request.method == 'POST':
+    prod_id = int(request.POST.get('product_id'))
+    if(Cart.objects.filter(user=request.user, product_id=prod_id)):
+      remark = request.POST.get('remark')
+      cart = Cart.objects.get(product_id=prod_id, user=request.user)
+      cart.remark = remark
+      cart.save()
+      return JsonResponse({'status':'updateed Remark Successfully'})
   return redirect('/')
 
 def deletecartitem(request):

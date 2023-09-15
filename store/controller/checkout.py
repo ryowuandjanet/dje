@@ -21,10 +21,13 @@ def index(request):
   total_price = 0
   for item in cartitems:
     total_price = total_price + item.product.selling_price * item.product_qty
+    remark = item.remark
+    print(total_price)
+    print(remark)
 
   userprofile = Profile.objects.filter(user=request.user)
 
-  context = { 'cartitems': cartitems, "total_price":total_price,"userprofile":userprofile}
+  context = { 'cartitems': cartitems, "total_price":total_price,"userprofile":userprofile,"remark":remark}
   return render(request,"store/checkout.html",context)
 
 @login_required(login_url='loginpage')
@@ -82,7 +85,8 @@ def placeorder(request):
         order = neworder,
         product = item.product,
         price = item.product.selling_price,
-        quantity = item.product_qty
+        quantity = item.product_qty,
+        remark =item.remark,
       )
 
       orderproduct = Product.objects.filter(id=item.product_id).first()

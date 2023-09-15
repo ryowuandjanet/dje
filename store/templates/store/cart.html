@@ -40,6 +40,13 @@
                       <h6>Out of Stock</h6>
                     {% endif %}
                   </div>
+                  <div class="col-md-4 my-auto">
+                    <input type="hidden" value="{{ item.product_id }}" class="prod_id">
+                    <label for="Remark">Remark</label>
+                    <textarea id="remarkField" name="remark" class="form-control remark-input" rows="3">{{ item.remark}}</textarea>
+                    <button  class="btn btn-primary getRemarkBtn">Get Remark</button>
+                  </div>
+                  
                   <div class="col-md-2 my-auto">
                     <button class="btn btn-danger delete-cart-item"><i class="fa-solid fa-trash"></i> Remove</button>
                   </div>

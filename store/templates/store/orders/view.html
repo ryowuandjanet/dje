@@ -51,6 +51,7 @@
                       <th>Quantity</th>
                       <th>Price</th>
                       <th>Image</th>
+                      <th>Remark</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -62,6 +63,7 @@
                         <td>
                           <img src="{{ item.product.product_image.url }}" height="50px" width="50px" alt="Product Image">
                         </td>
+                        <td>{{ item.remark }}</td>
                       </tr>
                     {% endfor %}
                   </tbody>
