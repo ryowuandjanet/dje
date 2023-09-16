@@ -12,7 +12,7 @@ def get_file_path(request,filename):
 
 class Category(models.Model):
   slug = models.CharField(max_length=150, null=False, blank=False)
-  name = models.CharField(max_length=150, null=False, blank=False)
+  name = models.CharField(u'目錄名稱',max_length=150, null=False, blank=False)
   image = models.ImageField(upload_to=get_file_path, null=True, blank=True)
   description = models.TextField(max_length=500,null=False,blank=False)
   status = models.BooleanField(default=False,help_text="0=default, 1=Hidden")
