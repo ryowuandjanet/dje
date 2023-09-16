@@ -10,7 +10,7 @@ def register(request):
     form = CustomUserForm(request.POST)
     if form.is_valid():
       form.save()
-      messages.success(request, "Registered Successfully! Login to Continue")
+      messages.success(request, "註冊成功！登錄以繼續")
       return redirect('/login')
   context = {
     'form':form
@@ -19,7 +19,7 @@ def register(request):
 
 def loginpage(request):
   if request.user.is_authenticated:
-    messages.warning(request, "You are already logged in")
+    messages.warning(request, "您已經登錄")
     return redirect('/')
   else:
     if request.method == 'POST':
@@ -30,15 +30,15 @@ def loginpage(request):
 
       if user is not None:
         login(request, user)
-        messages.success(request, "Logged in Successfully")
+        messages.success(request, "登錄成功")
         return redirect('/')
       else:
-        messages.error(request, "Invalid Username or Password")
+        messages.error(request, "用戶名或密碼無效")
         return redirect('/login')
   return render(request, "store/auth/login.html")
 
 def logoutpage(request):
   if request.user.is_authenticated:
     logout(request)
-    messages.success(request, "Logged out Successfully")
+    messages.success(request, "登出成功")
   return redirect('/')

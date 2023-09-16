@@ -13,7 +13,7 @@ def addtocart(request):
       product_check = Product.objects.get(id=prod_id)
       if(product_check):
         if(Cart.objects.filter(user=request.user.id, product_id=prod_id)):
-          return JsonResponse({'status':'Product Already in Cart'})
+          return JsonResponse({'status':'產品已在購物車中'})
         else:
           prod_qty = int(request.POST.get('product_qty'))
           remark =request.POST.get('remark')
@@ -21,13 +21,13 @@ def addtocart(request):
 
           if product_check.quantity >= prod_qty:
             Cart.objects.create(user=request.user, product_id=prod_id, product_qty=prod_qty,remark=remark)
-            return JsonResponse({'status':'Product added successfully'})
+            return JsonResponse({'status':'產品添加成功'})
           else:
             return JsonResponse({'status':"Only "+str(product_check.quantity)+' quantity available'})
       else:
-        return JsonResponse({'status':'No such product found'})
+        return JsonResponse({'status':'沒有找到該產品'})
     else:
-      return JsonResponse({'status':'Login to Continue'})
+      return JsonResponse({'status':'登錄以繼續'})
   return redirect('/')
 
 @login_required(login_url='loginpage')
@@ -46,7 +46,7 @@ def updatecart(request):
       cart.product_qty = prod_qty
       cart.remark = remark
       cart.save()
-      return JsonResponse({'status':'updateed Qty Successfully'})
+      return JsonResponse({'status':'更新數量成功'})
   return redirect('/')
 
 def updateremark(request):
@@ -57,7 +57,7 @@ def updateremark(request):
       cart = Cart.objects.get(product_id=prod_id, user=request.user)
       cart.remark = remark
       cart.save()
-      return JsonResponse({'status':'updateed Remark Successfully'})
+      return JsonResponse({'status':'備註更新成功'})
   return redirect('/')
 
 def deletecartitem(request):
@@ -66,5 +66,5 @@ def deletecartitem(request):
     if(Cart.objects.filter(user=request.user, product_id=prod_id)):
       cartitem = Cart.objects.get(product_id=prod_id, user=request.user)
       cartitem.delete()
-    return JsonResponse({'status':'Deleted Successfully'})
+    return JsonResponse({'status':'刪除成功'})
   return redirect('/')

@@ -73,8 +73,6 @@ $(document).ready(function(){
 
 
 
-
-
   $('.addToWishlist').click(function(e){
     e.preventDefault();
     console.log('click wishlist');

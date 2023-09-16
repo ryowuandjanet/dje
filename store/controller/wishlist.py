@@ -19,14 +19,14 @@ def addtowishlist(request):
       product_check = Product.objects.get(id=prod_id)
       if(product_check):
         if(Wishlist.objects.filter(user=request.user,product_id=prod_id)):
-          return JsonResponse({'status': "Product already to wishlist"})
+          return JsonResponse({'status': "產品已加入願望清單"})
         else:
           Wishlist.objects.create(user=request.user,product_id=prod_id)
-          return JsonResponse({'status': "Product added to wishlist"})
+          return JsonResponse({'status': "產品已添加至願望清單"})
       else:
-        return JsonResponse({'status': "No such product found"})
+        return JsonResponse({'status': "沒有找到該產品"})
     else:
-      return JsonResponse({'status': "Login to continue"})
+      return JsonResponse({'status': "登錄以繼續"})
   return redirect('/')
 
 def deletewishlistitem(request):
@@ -36,9 +36,9 @@ def deletewishlistitem(request):
       if(Wishlist.objects.filter(user=request.user,product_id=prod_id)):
         wishlistitem = Wishlist.objects.get(product_id = prod_id)
         wishlistitem.delete()
-        return JsonResponse({'status': "Product removed from  wishlist"})
+        return JsonResponse({'status': "產品已從願望清單中刪除"})
       else:
-        return JsonResponse({'status': "Product not found in wishlist"})
+        return JsonResponse({'status': "在願望清單中找不到產品"})
     else:
-      return JsonResponse({'status': "Login to continue"})
+      return JsonResponse({'status': "登錄以繼續"})
   return redirect('/')

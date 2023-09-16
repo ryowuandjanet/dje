@@ -27,21 +27,22 @@ class Category(models.Model):
   
 class Product(models.Model):
   category = models.ForeignKey(Category, on_delete=models.CASCADE)
-  slug = models.CharField(max_length=150, null=False, blank=False)
-  name = models.CharField(max_length=150, null=False, blank=False)
-  product_image = models.ImageField(upload_to=get_file_path, null=True, blank=True)
-  small_description = models.TextField(max_length=250,null=False,blank=False)
-  quantity = models.IntegerField(null=False, blank=False)
-  description = models.TextField(max_length=500,null=False,blank=False)
-  original_price = models.FloatField(null=False, blank=False)
-  selling_price = models.FloatField(null=False, blank=False)
-  status = models.BooleanField(default=False,help_text="0=default, 1=Hidden")
-  trending = models.BooleanField(default=False,help_text="0=default, 1=Trending")
-  tag = models.CharField(max_length=150, null=False, blank=False)
-  meta_title = models.CharField(max_length=150, null=False, blank=False)
-  meta_keywords = models.CharField(max_length=150, null=False, blank=False)
-  meta_description = models.TextField(max_length=500, null=False, blank=False)
-  created_at = models.DateTimeField(auto_now_add=True)
+  slug = models.CharField(u'slug',max_length=150, null=False, blank=False)
+  name = models.CharField(u'產品名稱',max_length=150, null=False, blank=False)
+  product_image = models.ImageField(u'主要圖片',upload_to=get_file_path, null=True, blank=True)
+  product_sub_image = models.ImageField(u'次要圖片',upload_to=get_file_path, null=True, blank=True)
+  description = models.TextField(u'其他說明',max_length=500,null=True,blank=True)
+  small_description = models.TextField(u'說明(紅字)',max_length=250,null=True,blank=True)
+  meta_title = models.TextField(u'說明(藍字)',max_length=150, null=True, blank=True)
+  meta_keywords = models.TextField(u'說明(綠字)',max_length=150, null=True, blank=True)
+  meta_description = models.TextField(u'說明(黑字)',max_length=150, null=True, blank=True)
+  quantity = models.IntegerField(u'庫存數',null=False, blank=False)
+  original_price = models.FloatField(u'原價',null=False, blank=False)
+  selling_price = models.FloatField(u'特價',null=False, blank=False)
+  status = models.BooleanField(u'顯示/隱藏',default=False,help_text="0=default, 1=Hidden")
+  trending = models.BooleanField(u'熱搜商品',default=False,help_text="0=default, 1=Trending")
+  tag = models.CharField(u'商品標籤',max_length=150, null=False, blank=False)
+  created_at = models.DateTimeField(u'說明(黑字)',auto_now_add=True)
 
   def __str__(self):
     return self.name
@@ -50,8 +51,9 @@ class Cart(models.Model):
   user = models.ForeignKey(User,on_delete=models.CASCADE)
   product = models.ForeignKey(Product, on_delete=models.CASCADE)
   product_qty = models.IntegerField(null=False,blank=False)
-  remark = models.TextField(blank=True, null=True)  # 添加remark字段
+  remark = models.TextField(blank=True, null=True)
   created_at = models.DateTimeField(auto_now_add=True)
+
 
 class Wishlist(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -61,13 +63,13 @@ class Wishlist(models.Model):
 class Order(models.Model):
   user = models.ForeignKey(User,on_delete=models.CASCADE)
   fname = models.CharField(max_length=150,null=False)
-  lname = models.CharField(max_length=150,null=False)
+  lname = models.CharField(max_length=150,blank=True,null=True)
   email = models.CharField(max_length=150,null=False)
   phone = models.CharField(max_length=150,null=False)
   address = models.TextField(null=False)
   city = models.CharField(max_length=150,null=False)
-  state = models.CharField(max_length=150,null=False)
-  country = models.CharField(max_length=150,null=False)
+  state = models.CharField(max_length=150,blank=True,null=True)
+  country = models.CharField(max_length=150,blank=True,null=True)
   pincode = models.CharField(max_length=150,null=False)
   total_price = models.FloatField(null=False)
   payment_mode = models.CharField(max_length=150,null=False)
@@ -90,7 +92,7 @@ class OrderItem(models.Model):
   order = models.ForeignKey(Order, on_delete=models.CASCADE)
   product = models.ForeignKey(Product, on_delete=models.CASCADE)
   price = models.FloatField(null=False)
-  remark = models.TextField(blank=True, null=True)  # 添加remark字段
+  remark = models.TextField(blank=True, null=True)
   quantity = models.IntegerField(null=False)
 
   def __str__(self):

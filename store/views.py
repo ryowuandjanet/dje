@@ -17,7 +17,7 @@ def collectionsview(request,slug):
     context = {'products': products, "category": category}
     return render(request, 'store/products/index.html',context)
   else:
-    messages.warning(request,"No Such category found")
+    messages.warning(request,"找不到此目錄")
     return redirect("collections")
 
 def productview(request,cate_slug,prod_slug):
@@ -26,9 +26,9 @@ def productview(request,cate_slug,prod_slug):
       products = Product.objects.filter(slug=prod_slug, status=0).first()
       context = {'products': products}
     else:
-      messages.error(request,"No Such Product found")
+      messages.error(request,"找不到此商品")
       return redirect("collections")
   else:
-    messages.error(request,"No Such category found")
+    messages.error(request,"找不到此目錄")
     return redirect("collections")
   return render(request, "store/products/view.html",context)

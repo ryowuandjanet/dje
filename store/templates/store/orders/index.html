@@ -4,8 +4,8 @@
   
   <div class="py-3 bg-primary">
     <div class="container">
-      <a href="{% url 'home' %}" class="text-white">Home /</a>
-      <a href="{% url 'myorders' %}" class="text-white">My orders</a>
+      <a href="{% url 'home' %}" class="text-white">首頁 /</a>
+      <a href="{% url 'myorders' %}" class="text-white">我的訂單</a>
     </div>
   </div>
 
@@ -14,28 +14,28 @@
       <div class="col-md-12">
         <div class="card shadow">
           <div class="card-header">
-            <h3>My orders</h3>
+            <h3>我的訂單</h3>
           </div>
           <div class="card-body">
             <table class="table table-bordered">
               <thead>
-                <tr>
-                  <th>Order Date</th>
-                  <th>Tracking Number</th>
-                  <th>Total Price</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                <tr class="fs-4">
+                  <th>訂購日期</th>
+                  <th>追踪號碼</th>
+                  <th>總價(元)</th>
+                  <th>狀態</th>
+                  <th>查看</th>
                 </tr>
               </thead>
               <tbody>
                 {% for item in orders %}
                   <tr>
-                    <td>{{ item.created_at }}</td>
+                    <td>{{ item.created_at|date:"Y-m-d H:i:s" }}</td>
                     <td>{{ item.tracking_no }}</td>
-                    <td>{{ item.total_price }}</td>
+                    <td>{{ item.total_price|stringformat:'d' }}</td>
                     <td>{{ item.status }}</td>
                     <td>
-                      <a href="{% url 'orderview' item.tracking_no %}" class="btn btn-primary">View</a>
+                      <a href="{% url 'orderview' item.tracking_no %}" class="btn btn-primary">明細</a>
                     </td>
                   </tr>
                 {% endfor %}
@@ -47,7 +47,4 @@
     </div>
   </div>
 
-  {% for item in orders %}
-    {{ item.tracking_no }}
-  {% endfor %}
 {% endblock content %}
