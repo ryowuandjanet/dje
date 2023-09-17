@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-^khj%e&(4m(e+#d*5_!33ctscw(**7h#8h1je7s%jo^p*dxfb%
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['.vercel.app','now.sh','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['.vercel.app','.now.sh','127.0.0.1','localhost']
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -53,10 +53,22 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 # db.sqlite3
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# db.postgresql
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'Miv9w01H8gytCBR68Pll',
+        'HOST': 'containers-us-west-68.railway.app',
+        'PORT': '7934'
     }
 }
 
@@ -95,10 +107,10 @@ USE_TZ = False
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = os.path.join(BASE_DIR , 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 MEDIA_URL = 'images/'
 MEDIA_ROOT = BASE_DIR / 'static'
-STATICFILES_DIRS = [ BASE_DIR / 'static' ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
