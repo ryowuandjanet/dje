@@ -4,7 +4,7 @@ $(document).ready(function(){
     var inc_value = $(this).closest('.product_data').find('.qty-input').val()
     var value = parseInt(inc_value,10)
     value = isNaN(value) ? 0 : value;
-    if(value < 10)
+    if(value < 10000)
     {
       value++;
       $(this).closest('.product_data').find('.qty-input').val(value)
@@ -47,10 +47,12 @@ $(document).ready(function(){
 
   $('.getRemarkBtn').click(function(e){
     e.preventDefault();
-    console.log('1122334455')
     var product_id = $(this).closest('.product_data').find('.prod_id').val()
+    var product_qty = $(this).closest('.product_data').find('.qty-input').val()
     var remark = $(this).closest('.product_data').find('.remark-input').val()
     var token = $('input[name=csrfmiddlewaretoken]').val()
+    console.log(product_qty)
+    console.log('1111')
     
     console.log(remark)
     
@@ -59,6 +61,7 @@ $(document).ready(function(){
       url: "/update-remark",
       data: {
         "product_id":product_id,
+        "product_qty":product_qty,
         "remark":remark,
         csrfmiddlewaretoken: token
       },
@@ -91,10 +94,11 @@ $(document).ready(function(){
     })
   })
 
-  $('.changeQuantity').click(function(e){
+  $('.updateCart').click(function(e){
     e.preventDefault();
     var product_id = $(this).closest('.product_data').find('.prod_id').val()
     var product_qty = $(this).closest('.product_data').find('.qty-input').val()
+    var remark = $(this).closest('.product_data').find('.remark-input').val()
     var token = $('input[name=csrfmiddlewaretoken]').val()
     $.ajax({
       method: "POST",
@@ -102,6 +106,7 @@ $(document).ready(function(){
       data: {
         "product_id":product_id,
         "product_qty":product_qty,
+        "remark":remark,
         csrfmiddlewaretoken: token
       },
       success: function (response) {

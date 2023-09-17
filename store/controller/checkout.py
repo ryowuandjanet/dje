@@ -20,10 +20,11 @@ def index(request):
   cartitems = Cart.objects.filter(user=request.user)
   total_price = 0
   for item in cartitems:
-    total_price = total_price + item.product.selling_price * item.product_qty
+    if item.product_qty >= 100:
+      total_price = total_price + item.product.selling_price * item.product_qty
+    else:
+      total_price = total_price + item.product.original_price * item.product_qty
     remark = item.remark
-    print(total_price)
-    print(remark)
 
   userprofile = Profile.objects.filter(user=request.user)
 
@@ -69,12 +70,15 @@ def placeorder(request):
     cart = Cart.objects.filter(user = request.user)
     cart_total_price = 0
     for item in cart:
-      cart_total_price = cart_total_price + item.product.selling_price * item.product_qty
+      if item.product_qty >= 100:
+        cart_total_price = cart_total_price + item.product.selling_price * item.product_qty
+      else:
+        cart_total_price = cart_total_price + item.product.original_price * item.product_qty
 
     neworder.total_price = cart_total_price
-    trackno ='sharma'+str(random.randint(1111111,9999999))
+    trackno ='bigbear'+str(random.randint(1111111,9999999))
     while Order.objects.filter(tracking_no = trackno) is None:
-      trackno ='sharma'+str(random.randint(1111111,9999999))
+      trackno ='bigbear'+str(random.randint(1111111,9999999))
     
     neworder.tracking_no = trackno
     neworder.save()
@@ -107,8 +111,10 @@ def razorpaycheck(request):
   cart = Cart.objects.filter(user=request.user)
   total_price = 0
   for item in cart:
-    total_price = total_price + item.product.selling_price * item.product_qty
-  
+    if item.product_qty >= 100:
+      total_price = total_price + item.product.selling_price * item.product_qty
+    else:
+      total_price = total_price + item.product.original_price * item.product_qty  
   return JsonResponse({
     'total_price': total_price
   })

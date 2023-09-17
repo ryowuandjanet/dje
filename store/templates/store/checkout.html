@@ -78,7 +78,11 @@
                         {{ item.product.name }}
                       </td>
                       <td>{{ item.product_qty }}</td>
-                      <td>{{ item.product.selling_price|stringformat:'d' }}</td>
+                      {% if item.product_qty >= 100 %}
+                        <td>{{ item.product.selling_price|stringformat:'d' }}</td>
+                      {% else %}
+                        <td>{{ item.product.original_price|stringformat:'d' }}</td>
+                      {% endif %}
                     </tr>
                     {% if item.remark %}
                       <tr>

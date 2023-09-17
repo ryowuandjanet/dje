@@ -46,19 +46,9 @@ def updatecart(request):
       cart.product_qty = prod_qty
       cart.remark = remark
       cart.save()
-      return JsonResponse({'status':'更新數量成功'})
+      return JsonResponse({'status':'更新成功'})
   return redirect('/')
 
-def updateremark(request):
-  if request.method == 'POST':
-    prod_id = int(request.POST.get('product_id'))
-    if(Cart.objects.filter(user=request.user, product_id=prod_id)):
-      remark = request.POST.get('remark')
-      cart = Cart.objects.get(product_id=prod_id, user=request.user)
-      cart.remark = remark
-      cart.save()
-      return JsonResponse({'status':'備註更新成功'})
-  return redirect('/')
 
 def deletecartitem(request):
   if request.method == 'POST':

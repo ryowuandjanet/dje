@@ -1,5 +1,28 @@
 {% extends 'store/layouts/main.html' %}
 {% block content %}
   {% include 'store/inc/slider.html' %}
-  <h1>Hello Ryowu</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>商品分類</h1>
+        <hr>
+        <div class="row">
+          {% for item in category %}
+            <div class="col-md-3">
+              <div class="card">
+                <a href="{% url 'collectionsview' item.slug %}">
+                  <div class="card-body">
+                    <div class="category-image">
+                      <img src="{{ item.image.url }}" alt="Category image" class="w-100">
+                    </div>
+                    <h4 class="text-center">{{ item.name }}</h4>
+                  </div>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock content %}

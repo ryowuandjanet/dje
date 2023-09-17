@@ -3,7 +3,12 @@ from django.contrib import messages
 from .models import *
 
 def home(request):
-  return render(request,"store/index.html")
+  category = Category.objects.filter(status=0)
+  context = {'category': category}
+  return render(request,"store/index.html",context)
+
+def about(request):
+  return render(request,"store/about.html")
 
 def collections(request):
   category = Category.objects.filter(status=0)
