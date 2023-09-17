@@ -6,7 +6,8 @@ SECRET_KEY = 'django-insecure-^khj%e&(4m(e+#d*5_!33ctscw(**7h#8h1je7s%jo^p*dxfb%
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app','now.sh','127.0.0.1','localhost']
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -97,5 +98,6 @@ STATIC_URL = 'static/'
 MEDIA_URL = 'images/'
 MEDIA_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [ BASE_DIR / 'static' ]
+STATIC_ROOT = [ BASE_DIR, 'staticfiles_build', 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
