@@ -64,7 +64,7 @@
                           <td>{{ item.price|stringformat:'d' }}</td>
                         -->
                         <td>
-                          <img src="{{ item.product.product_image.url }}" height="50px" width="50px" alt="Product Image">
+                          <img src="{{ item.product.product_image }}" height="50px" width="50px" alt="Product Image">
                         </td>
                         <td>{{ item.remark|default:"" }}</td>
                       </tr>

@@ -53,24 +53,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 # db.sqlite3
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-# db.postgresql
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'Miv9w01H8gytCBR68Pll',
-        'HOST': 'containers-us-west-68.railway.app',
-        'PORT': '7934'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# db.postgresql
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'bigbearpaper',
+#         'USER': 'root',
+#         'PASSWORD': 'OlsMApg4ilZ3u8P60znZUAomNGf05HFP',
+#         'HOST': 'dpg-ck47dbuct0pc73fbllt0-a',
+#         'PORT': '5432'
+#     }
+# }
 
 # db.mysql
 # DATABASES = {
