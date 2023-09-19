@@ -15,7 +15,11 @@ def index(request):
   for item in rawcart:
     if item.product_qty > item.product.quantity:
       Cart.objects.delete(id=item.id)
-
+  
+  remarkcart = Cart.objects.filter(user=request.user)
+  for item in remarkcart:
+    if item.remark:
+      remark = item.remark
 
   cartitems = Cart.objects.filter(user=request.user)
   total_price = 0
@@ -24,7 +28,6 @@ def index(request):
       total_price = total_price + item.product.selling_price * item.product_qty
     else:
       total_price = total_price + item.product.original_price * item.product_qty
-    remark = item.remark
 
   userprofile = Profile.objects.filter(user=request.user)
 
@@ -37,7 +40,6 @@ def placeorder(request):
     currentuser = User.objects.filter(id=request.user.id).first()
     if not currentuser.first_name:
       currentuser.first_name = request.POST.get('fname')
-      currentuser.last_name = request.POST.get('lname')
       currentuser.save()
     
     if not Profile.objects.filter(user=request.user):
@@ -46,8 +48,6 @@ def placeorder(request):
       userprofile.phone = request.POST.get('phone')
       userprofile.address = request.POST.get('address')
       userprofile.city = request.POST.get('city')
-      userprofile.state = request.POST.get('state')
-      userprofile.country = request.POST.get('country')
       userprofile.pincode = request.POST.get('pincode')
       userprofile.save()
 
@@ -55,13 +55,10 @@ def placeorder(request):
     neworder = Order()
     neworder.user = request.user
     neworder.fname = request.POST.get('fname')
-    neworder.lname = request.POST.get('lname')
     neworder.email = request.POST.get('email')
     neworder.phone = request.POST.get('phone')
     neworder.address = request.POST.get('address')
     neworder.city = request.POST.get('city')
-    neworder.state = request.POST.get('state')
-    neworder.country = request.POST.get('country')
     neworder.pincode = request.POST.get('pincode')
 
     neworder.payment_mode = request.POST.get('payment_mode')

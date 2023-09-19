@@ -3,17 +3,14 @@ $(document).ready(function(){
     e.preventDefault()
 
     var fname = $("[name='fname']").val()
-    var lname = $("[name='lname']").val()
     var email = $("[name='email']").val()
     var phone = $("[name='phone']").val()
     var address = $("[name='address']").val()
     var city = $("[name='city']").val()
-    var state = $("[name='state']").val()
-    var country = $("[name='country']").val()
     var pincode = $("[name='pincode']").val()
     var token = $("[name='csrfmiddlewaretoken']").val()
 
-    if(fname == "" || lname == "" || email == "" || phone == "" || address == "" || city == "" || state == "" || country == "" || pincode == "")
+    if(fname == "" || email == "" || phone == "" || address == "" || city == "" || pincode == "")
     {
       Swal.fire("Alert!","All fields are mandatory !","error")
       return false
@@ -34,13 +31,10 @@ $(document).ready(function(){
               alert(responseb.razorpay_payment_id);
               data = {
                 "fname": fname,
-                "lname": lname,
                 "email": email,
                 "phone": phone,
                 "address": address,
                 "city": city,
-                "state": state,
-                "country": country,
                 "pincode": pincode,
                 "payment_mode": "Paid by Razorpay",
                 "payment_id": responseb.razorpay_payment_id,
@@ -58,7 +52,7 @@ $(document).ready(function(){
               })
             },
             "prefill": {
-              "name": fname+" "+lname,
+              "name": fname,
               "email": email,
               "contact": phone,
             },

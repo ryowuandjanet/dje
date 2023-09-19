@@ -63,13 +63,10 @@ class Wishlist(models.Model):
 class Order(models.Model):
   user = models.ForeignKey(User,on_delete=models.CASCADE)
   fname = models.CharField(max_length=150,null=False)
-  lname = models.CharField(max_length=150,blank=True,null=True)
   email = models.CharField(max_length=150,null=False)
   phone = models.CharField(max_length=150,null=False)
   address = models.TextField(null=False)
   city = models.CharField(max_length=150,null=False)
-  state = models.CharField(max_length=150,blank=True,null=True)
-  country = models.CharField(max_length=150,blank=True,null=True)
   pincode = models.CharField(max_length=150,null=False)
   total_price = models.FloatField(null=False)
   payment_mode = models.CharField(max_length=150,null=False)
@@ -103,8 +100,6 @@ class Profile(models.Model):
   phone = models.CharField(max_length=50, null=False)
   address = models.TextField(null=False)
   city = models.CharField(max_length=150,null=False)
-  state = models.CharField(max_length=150,null=False)
-  country = models.CharField(max_length=150,null=False)
   pincode = models.CharField(max_length=150,null=False)
   created_at = models.DateTimeField(auto_now_add=True)
 
