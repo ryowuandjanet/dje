@@ -1,9 +1,27 @@
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import redirect,render
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView, PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 
 from store.forms import CustomUserForm
 
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'store/auth/password_reset.html'
+    email_template_name = 'store/auth/password_reset_email.html'
+    subject_template_name = 'store/auth/password_reset_subject'
+    success_message = "We've emailed you instructions for setting your password, " \
+                      "if an account exists with the email you entered. You should receive them shortly." \
+                      " If you don't receive an email, " \
+                      "please make sure you've entered the address you registered with, and check your spam folder."
+    success_url = reverse_lazy('home')
+
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'store/auth/change_password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('home')
+    
 def register(request):
   form  = CustomUserForm()
   if request.method == 'POST':

@@ -52,15 +52,13 @@
           </li>
         -->
         {% if request.user.is_authenticated %}
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown badge bg-info">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             {{ request.user }}
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'myorders' %}">我的訂單</a></li>
-            <!--
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-            -->
+            <li><a class="dropdown-item" href="{% url 'password_change' %}">修改密碼</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{% url 'logout' %}">登出</a></li>
           </ul>

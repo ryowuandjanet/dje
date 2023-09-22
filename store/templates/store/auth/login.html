@@ -8,21 +8,27 @@
             <div class="card-body">
               <form action="" method="POST">
                 {% csrf_token %}
-                <div class="text-center">
-                  <h3> 登錄 </h3>
+                <div class="text-center fs-3 fw-semibold">
+                   登錄
                 </div>
                 <hr>
                 <div class="form-group mt-4">
-                  <label for="" class="fw-semibold">使用者名稱 : </label>
+                  <label for="" class="fw-semibold fs-5">使用者名稱 : </label>
                   <input type="text" class="form-control" name="username" placeholder="請輸入使用者名稱">
                 </div>
                 <div class="form-group my-4">
-                  <label for="" class="fw-semibold">密碼 : </label>
+                  <label for="" class="fw-semibold fs-5">密碼 : </label>
                   <input type="password" class="form-control" name="password" placeholder="請輸入密碼">
                 </div>
                
                 <button type="submit" class="btn float-end shadow btn-success px-4">登錄</button>
               </form>
+              <div>
+                <a href="{% url 'password_reset' %}" class="fw-semibold fs-5"><i>忘記密碼?</i></a>
+              </div>
+              <div>
+                <a href="{% url 'register' %}" class="fw-semibold fs-5"><i>還沒有帳號?</i></a>
+              </div>
             </div>
           </div>
         </div>

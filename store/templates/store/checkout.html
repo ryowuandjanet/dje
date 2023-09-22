@@ -86,7 +86,7 @@
                     </tr>
                     {% if item.remark %}
                       <tr>
-                        <td colspan="3" class="bg-warning fw-semibold">備註：{{ item.remark }}</td>
+                        <td colspan="3" class="bg-warning fw-semibold">備註：<span class="text-dark">{{ item.remark|linebreaks }}</span></td>
                       </tr>
                     {% endif %}
                   {% endfor %}
