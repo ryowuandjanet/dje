@@ -1,5 +1,4 @@
 {% extends 'store/layouts/main.html' %}
-{% load urlify %}
 
 {% block content %}
 <div class="py-3 bg-primary">
@@ -87,7 +86,7 @@
                         <td>{{ item.product.original_price|stringformat:'d' }}</td>
                       {% endif %}
                       <td>
-                        {% singlePrice item.product_qty item.product.original_price item.product.selling_price %}
+                        {{ item.getCartSingleItemPrice|stringformat:'d' }}
                       </td>
                     </tr>
                     {% if item.remark %}

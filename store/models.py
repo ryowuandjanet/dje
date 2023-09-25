@@ -54,6 +54,16 @@ class Cart(models.Model):
   remark = models.TextField(blank=True, null=True)
   created_at = models.DateTimeField(auto_now_add=True)
 
+  def getCartSingleItemPrice(self):
+    newlist=[]
+    try:
+      if self.product_qty >= 100:
+        return self.product_qty * self.product.selling_price
+      else:
+        return self.product_qty * self.product.original_price
+    except:
+      newlist.append(0)
+
 
 class Wishlist(models.Model):
   user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -94,6 +104,16 @@ class OrderItem(models.Model):
 
   def __str__(self):
     return '{} - {}'.format(self.order.id,self.order.tracking_no)
+  
+  def getOrderSingleItemPrice(self):
+    newlist=[]
+    try:
+      if self.quantity >= 100:
+        return self.quantity * self.product.selling_price
+      else:
+        return self.quantity * self.product.original_price
+    except:
+      newlist.append(0)
 
 class Profile(models.Model):
   user = models.ForeignKey(User,on_delete=models.CASCADE)
