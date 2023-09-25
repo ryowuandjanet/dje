@@ -20,6 +20,8 @@ def index(request):
   for item in remarkcart:
     if item.remark:
       remark = item.remark
+    else:
+      remark = ""
 
   cartitems = Cart.objects.filter(user=request.user)
   total_price = 0

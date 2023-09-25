@@ -8,118 +8,123 @@
   </div>
 </div>
 
-<div class="container">
-  <form action="{% url 'placeorder' %}" method="POST">
-    {% csrf_token %}
-    <div class="row">
-      <div class="col-md-4">
-  
-          <div class="card shadow">
-            <div class="card-body">
-              <h4 class="fw-semibold">貨運訊息</h4>
-              <hr>
-              <div class="row checkoutform">
-                <div class="col-md-12">
-                  <label>個人姓名(或公司行號)</label>
-                  <input type="text" required value="{{ request.user.first_name }}" class="form-control" name="fname" placeholder="請輸入個人姓名(或公司行號)">
-                </div>
-  
-                <div class="col-md-12 mt-2">
-                  <label>電子郵件</label>
-                  <input type="email" required value="{{ request.user.email }}" class="form-control" name="email" placeholder="請輸入電子郵件">
-                </div>
+<div class="py-5">
+  <div class="container">
+    <form action="{% url 'placeorder' %}" method="POST">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-4">
+    
+            <div class="card shadow">
+              <div class="card-body">
+                <h4 class="fw-semibold">貨運訊息</h4>
+                <hr>
+                <div class="row checkoutform">
+                  <div class="col-md-12">
+                    <label>個人姓名(或公司行號)</label>
+                    <input type="text" required value="{{ request.user.first_name }}" class="form-control" name="fname" placeholder="請輸入個人姓名(或公司行號)">
+                  </div>
+    
+                  <div class="col-md-12 mt-2">
+                    <label>電子郵件</label>
+                    <input type="email" required value="{{ request.user.email }}" class="form-control" name="email" placeholder="請輸入電子郵件">
+                  </div>
 
-                <div class="col-md-12 mt-2">
-                  <label>手機(或連絡電話)</label>
-                  <input type="text" required value="{{ userprofile.phone }}" class="form-control" name="phone" placeholder="請輸入連絡電話">
-                </div>
-  
-                <hr class="mt-3">
-                <div class="col-md-12 mt-2">
-                  <label>縣市</label>
-                  <input type="text" required value="{{ userprofile.city }}" class="form-control" name="city" placeholder="請輸入縣市">
-                </div>
-                
-                <div class="col-md-12 mt-2">
-                  <label>區域號碼</label>
-                  <input type="text"  value="{{ userprofile.pincode }}" class="form-control" name="pincode" placeholder="請輸入區域號碼">
-                </div>
-                
-                <div class="col-md-12 mt-2">
-                  <label>住址</label>
-                  <textarea required class="form-control" name="address" placeholder="請輸入住址">
-                    {{ userprofile.address }}
-                  </textarea>
+                  <div class="col-md-12 mt-2">
+                    <label>手機(或連絡電話)</label>
+                    <input type="text" required value="{{ userprofile.phone }}" class="form-control" name="phone" placeholder="請輸入連絡電話">
+                  </div>
+    
+                  <hr class="mt-3">
+                  <div class="col-md-12 mt-2">
+                    <label>縣市</label>
+                    <input type="text" required value="{{ userprofile.city }}" class="form-control" name="city" placeholder="請輸入縣市">
+                  </div>
+                  
+                  <div class="col-md-12 mt-2">
+                    <label>區域號碼</label>
+                    <input type="text"  value="{{ userprofile.pincode }}" class="form-control" name="pincode" placeholder="請輸入區域號碼">
+                  </div>
+                  
+                  <div class="col-md-12 mt-2">
+                    <label>住址</label>
+                    <textarea required class="form-control" name="address" placeholder="請輸入住址">
+                      {{ userprofile.address }}
+                    </textarea>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-  
-      </div>
-  
-      <div class="col-md-8">
-        <div class="card shadow">
-          <div class="card-body">
-            <h4 class="fw-semibold">訂單摘要</h4>
-            <hr>
-            {% if cartitems %}
-              <table class="table table-stripeds table-bordereds">
-                <thead>
-                  <tr>
-                    <th>產品</th>
-                    <th>數量</th>
-                    <th>單價</th>
-                    <th>合計</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for item in cartitems %}
+    
+        </div>
+    
+        <div class="col-md-8">
+          <div class="card shadow">
+            <div class="card-body">
+              <h4 class="fw-semibold">訂單摘要
+                <button onclick="goBack()" class="btn btn-warning float-end text-dark fw-semibold"><i class="fa-solid fa-reply"></i> 返回前一页</a>
+              </h4>
+              <hr>
+              {% if cartitems %}
+                <table class="table table-stripeds table-bordereds">
+                  <thead>
                     <tr>
-                      <td>
-                        <img src="{{ item.product.product_image }}" class="me-2" height="50px" width="50px">
-                        {{ item.product.name }}
-                      </td>
-                      <td class="pro_qty">{{ item.product_qty }}</td>
-                      {% if item.product_qty >= 100 %}
-                        <td>{{ item.product.selling_price|stringformat:'d' }}</td>
-                      {% else %}
-                        <td>{{ item.product.original_price|stringformat:'d' }}</td>
-                      {% endif %}
-                      <td>
-                        {{ item.getCartSingleItemPrice|stringformat:'d' }}
-                      </td>
+                      <th>產品</th>
+                      <th>數量</th>
+                      <th>單價</th>
+                      <th>合計</th>
                     </tr>
-                    {% if item.remark %}
+                  </thead>
+                  <tbody>
+                    {% for item in cartitems %}
                       <tr>
-                        <td colspan="4" class="fw-semibold" style="background-color: rgba(250, 244, 211, 0.7);">
-                          <span class="fs-5">備註：</span>
-                          <div class="text-danger mx-2">{{ item.remark|linebreaks }}</div>
+                        <td>
+                          <img src="{{ item.product.product_image }}" class="me-2" height="50px" width="50px">
+                          {{ item.product.name }}
+                        </td>
+                        <td class="pro_qty">{{ item.product_qty }}</td>
+                        {% if item.product_qty >= 100 %}
+                          <td>{{ item.product.selling_price|stringformat:'d' }}</td>
+                        {% else %}
+                          <td>{{ item.product.original_price|stringformat:'d' }}</td>
+                        {% endif %}
+                        <td>
+                          {{ item.getCartSingleItemPrice|stringformat:'d' }}                   
                         </td>
                       </tr>
-                    {% endif %}
-                  {% endfor %}
-                </tbody>
-              </table>
-              <h6 class="fw-bold">總計
-                <span class="float-end text-primary fs-4 fw-semibold">新台幣 {{ total_price|stringformat:'d' }}元</span>
-              </h6>
-              <input type="hidden" value="COD" name="payment_mode">
-              <div class="mt-3">
-                <button type="submit" class="btn btn-success w-100"> 完成 </button>
-                <!--
-                <button type="button" class="btn btn-primary payWithRazorpay w-100 mt-2"> Pay with Razorpay </button>
-                <div id="paypal-button-container" class="mt-2"></div>
-                -->
-              </div>
-            {% else %}
-              <h4>Your cart is empty</h4>
-            {% endif %}
-  
+                      {% if item.remark %}
+                        <tr>
+                          <td colspan="4" class="fw-semibold" style="background-color: rgba(250, 244, 211, 0.7);">
+                            <span class="fs-5">備註：</span>
+                            <div class="text-danger mx-2">{{ item.remark|linebreaks }}</div>
+                            
+                          </td>
+                        </tr>
+                      {% endif %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <h6 class="fw-bold">總計
+                  <span class="float-end text-primary fs-4 fw-semibold">新台幣 {{ total_price|stringformat:'d' }}元</span>
+                </h6>
+                <input type="hidden" value="COD" name="payment_mode">
+                <div class="mt-3">
+                  <button type="submit" class="btn btn-success w-100"> 完成 </button>
+                  <!--
+                  <button type="button" class="btn btn-primary payWithRazorpay w-100 mt-2"> Pay with Razorpay </button>
+                  <div id="paypal-button-container" class="mt-2"></div>
+                  -->
+                </div>
+              {% else %}
+                <h4>Your cart is empty</h4>
+              {% endif %}
+    
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
 
 {% endblock content %}
@@ -129,6 +134,9 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://www.paypal.com/sdk/js?client-id=AQ_Z8EfrHtGKaVwXTSFy4TyIVSpmlzN8VIFHybK9QPT4U6_6wgvBMm1hwUSofgGHlywcouJxwzu_R_Mv&currency=USD"></script>
   <script>
+    function goBack() {
+      history.back();
+    }
     paypal.Buttons({
       style: {
         layout: 'vertical',
