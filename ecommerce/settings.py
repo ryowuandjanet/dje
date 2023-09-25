@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-^khj%e&(4m(e+#d*5_!33ctscw(**7h#8h1je7s%jo^p*dxfb%
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['104.248.118.84','.vercel.app','.now.sh','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['104.248.118.84','.vercel.app','www.bigbearpaper.com','bigbearpaper.com','127.0.0.1','localhost']
 
 INSTALLED_APPS = [
     # 'jazzmin',

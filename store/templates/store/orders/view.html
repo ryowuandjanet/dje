@@ -1,4 +1,5 @@
 {% extends 'store/layouts/main.html' %}
+{% load urlify %}
 
 {% block content %}
   
@@ -20,7 +21,7 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <h4>貨運明細</h4>
                 <hr>
                 <label class="mt-1 fw-semibold">個人姓名(或公司行號)</label>
@@ -37,22 +38,26 @@
                 </div>
 
               </div>
-              <div class="col-md-6">
+              <div class="col-md-8">
                 <h4>訂單詳細信息</h4>
                 <hr>
                 <table class="table table-bordered">
                   <thead>
                     <tr>
+                      <th>圖示</th>
                       <th>商品名稱</th>
                       <th>數量</th>
                       <th>單價</th>
-                      <th>圖示</th>
+                      <th>合計</th>
                       <th>備註</th>
                     </tr>
                   </thead>
                   <tbody>
                     {% for item in orderitems %}
                       <tr>
+                        <td>
+                          <img src="{{ item.product.product_image }}" height="50px" width="50px" alt="Product Image">
+                        </td>
                         <td>{{ item.product.name }}</td>
                         <td>{{ item.quantity }}</td>
                         {% if item.quantity >= 100 %}
@@ -60,11 +65,8 @@
                         {% else %}
                           <td>{{ item.product.original_price|stringformat:'d' }}</td>
                         {% endif %}
-                        <!--
-                          <td>{{ item.price|stringformat:'d' }}</td>
-                        -->
                         <td>
-                          <img src="{{ item.product.product_image }}" height="50px" width="50px" alt="Product Image">
+                          {% singlePrice item.quantity item.product.original_price item.product.selling_price %}
                         </td>
                         <td>{{ item.remark|linebreaks|default:"" }}</td>
                       </tr>
@@ -74,7 +76,15 @@
 
                 <h4>總計 : <span class="float-end">新台幣 {{ order.total_price|stringformat:'d' }}元</span></h4>
 
-                <h6 class="border p-2">付款方式 : {{ order.payment_mode }}</h6>
+                <h6 class="border p-2">
+                  <div class="fs-4 fw-semibold">付款資訊：</div>
+                  <div class="fs-5 mx-2 mt-1 text-danger fw-semibold">
+                    <div>中國信託822</div>
+                    <div>0000440540133819</div>
+                    <div>戶名:王建斌</div>
+                  </div>
+
+                </h6>
                 <h6 class="border p-2">訂單狀態 : {{ order.status }}</h6>
                 <h6 class="border p-2">追蹤號碼 : {{ order.tracking_no }}</h6>
               </div>

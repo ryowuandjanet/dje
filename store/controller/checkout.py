@@ -73,6 +73,7 @@ def placeorder(request):
         cart_total_price = cart_total_price + item.product.original_price * item.product_qty
 
     neworder.total_price = cart_total_price
+    
     trackno ='bigbear'+str(random.randint(1111111,9999999))
     while Order.objects.filter(tracking_no = trackno) is None:
       trackno ='bigbear'+str(random.randint(1111111,9999999))

@@ -1,4 +1,5 @@
 {% extends 'store/layouts/main.html' %}
+{% load urlify %}
 
 {% block content %}
 <div class="py-3 bg-primary">
@@ -12,7 +13,7 @@
   <form action="{% url 'placeorder' %}" method="POST">
     {% csrf_token %}
     <div class="row">
-      <div class="col-md-7">
+      <div class="col-md-4">
   
           <div class="card shadow">
             <div class="card-body">
@@ -24,22 +25,23 @@
                   <input type="text" required value="{{ request.user.first_name }}" class="form-control" name="fname" placeholder="請輸入個人姓名(或公司行號)">
                 </div>
   
-                <div class="col-md-6 mt-2">
+                <div class="col-md-12 mt-2">
                   <label>電子郵件</label>
                   <input type="email" required value="{{ request.user.email }}" class="form-control" name="email" placeholder="請輸入電子郵件">
                 </div>
-                <div class="col-md-6 mt-2">
+
+                <div class="col-md-12 mt-2">
                   <label>手機(或連絡電話)</label>
                   <input type="text" required value="{{ userprofile.phone }}" class="form-control" name="phone" placeholder="請輸入連絡電話">
                 </div>
   
                 <hr class="mt-3">
-                <div class="col-md-6 mt-2">
+                <div class="col-md-12 mt-2">
                   <label>縣市</label>
                   <input type="text" required value="{{ userprofile.city }}" class="form-control" name="city" placeholder="請輸入縣市">
                 </div>
                 
-                <div class="col-md-6 mt-2">
+                <div class="col-md-12 mt-2">
                   <label>區域號碼</label>
                   <input type="text"  value="{{ userprofile.pincode }}" class="form-control" name="pincode" placeholder="請輸入區域號碼">
                 </div>
@@ -56,7 +58,7 @@
   
       </div>
   
-      <div class="col-md-5">
+      <div class="col-md-8">
         <div class="card shadow">
           <div class="card-body">
             <h4 class="fw-semibold">訂單摘要</h4>
@@ -68,6 +70,7 @@
                     <th>產品</th>
                     <th>數量</th>
                     <th>單價</th>
+                    <th>合計</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -77,16 +80,22 @@
                         <img src="{{ item.product.product_image }}" class="me-2" height="50px" width="50px">
                         {{ item.product.name }}
                       </td>
-                      <td>{{ item.product_qty }}</td>
+                      <td class="pro_qty">{{ item.product_qty }}</td>
                       {% if item.product_qty >= 100 %}
                         <td>{{ item.product.selling_price|stringformat:'d' }}</td>
                       {% else %}
                         <td>{{ item.product.original_price|stringformat:'d' }}</td>
                       {% endif %}
+                      <td>
+                        {% singlePrice item.product_qty item.product.original_price item.product.selling_price %}
+                      </td>
                     </tr>
                     {% if item.remark %}
                       <tr>
-                        <td colspan="3" class="bg-warning fw-semibold">備註：<span class="text-dark">{{ item.remark|linebreaks }}</span></td>
+                        <td colspan="4" class="fw-semibold" style="background-color: rgba(250, 244, 211, 0.7);">
+                          <span class="fs-5">備註：</span>
+                          <div class="text-danger mx-2">{{ item.remark|linebreaks }}</div>
+                        </td>
                       </tr>
                     {% endif %}
                   {% endfor %}

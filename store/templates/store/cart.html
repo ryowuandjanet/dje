@@ -18,8 +18,8 @@
             <div class="row pb-1">
               <div class="col-md-1 fs-5 fw-semibold border-bottom border-secondary">圖示</div>
               <div class="col-md-2 fs-5 fw-semibold border-bottom border-secondary">產品名稱</div>
-              <div class="col-md-1 fs-5 fw-semibold border-bottom border-secondary">單價(元)</div>
-              <div class="col-md-2 fs-5 fw-semibold border-bottom border-secondary">數量</div>
+              <div class="col-md-2 fs-5 fw-semibold border-bottom border-secondary">單價(元)</div>
+              <div class="col-md-1 fs-5 fw-semibold border-bottom border-secondary">數量</div>
               <div class="col-md-4 fs-5 fw-semibold border-bottom border-secondary">說明(含燙金內容)</div>
               <div class="col-md-2 fs-5 fw-semibold border-bottom border-secondary">功能</div>
             </div>
@@ -31,11 +31,11 @@
                   <div class="col-md-2 my-auto">
                     <h6>{{ item.product.name }}</h6>
                   </div>
-                  <div class="col-md-1 my-auto">
-                    <h6>{{ item.product.original_price|stringformat:'d' }}</h6>
-                    <h6>{{ item.product.selling_price|stringformat:'d' }}(滿百)</h6>
-                  </div>
                   <div class="col-md-2 my-auto">
+                    <h6>{{ item.product.original_price|stringformat:'d' }}</h6>
+                    <h6>{{ item.product.selling_price|stringformat:'d' }}(滿百個)</h6>
+                  </div>
+                  <div class="col-md-1 my-auto">
                     <input type="hidden" value="{{ item.product_id }}" class="prod_id">
                     {% csrf_token %}
                     {% if item.product.quantity >= item.product_qty %}
