@@ -75,6 +75,7 @@ class Order(models.Model):
   fname = models.CharField(max_length=150,null=False)
   email = models.CharField(max_length=150,null=False)
   phone = models.CharField(max_length=150,null=False)
+  uniNumber = models.CharField(max_length=10, null=False)
   address = models.TextField(null=False)
   city = models.CharField(max_length=150,null=False)
   pincode = models.CharField(max_length=150,null=False)
@@ -117,6 +118,7 @@ class OrderItem(models.Model):
 
 class Profile(models.Model):
   user = models.ForeignKey(User,on_delete=models.CASCADE)
+  uniNumber = models.CharField(max_length=10, null=False)
   phone = models.CharField(max_length=50, null=False)
   address = models.TextField(null=False)
   city = models.CharField(max_length=150,null=False)

@@ -8,13 +8,14 @@ SECRET_KEY = 'django-insecure-^khj%e&(4m(e+#d*5_!33ctscw(**7h#8h1je7s%jo^p*dxfb%
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['104.248.118.84','.vercel.app','www.bigbearpaper.com','bigbearpaper.com','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['167.71.215.250','bigbearpaper.com','www.bigbearpaper.com','127.0.0.1','localhost']
 
 INSTALLED_APPS = [
     # 'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'whitenoise.runserver_nostatic',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -30,6 +31,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'

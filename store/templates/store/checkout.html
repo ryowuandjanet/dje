@@ -24,6 +24,11 @@
                     <label>個人姓名(或公司行號)</label>
                     <input type="text" required value="{{ request.user.first_name }}" class="form-control" name="fname" placeholder="請輸入個人姓名(或公司行號)">
                   </div>
+
+                  <div class="col-md-12">
+                    <label>統一編號</label>
+                    <input type="text" value="{{ userprofile.uniNumber }}" class="form-control" name="uniNumber" placeholder="請輸入統一編號">
+                  </div>
     
                   <div class="col-md-12 mt-2">
                     <label>電子郵件</label>
@@ -104,8 +109,16 @@
                     {% endfor %}
                   </tbody>
                 </table>
-                <h6 class="fw-bold">總計
-                  <span class="float-end text-primary fs-4 fw-semibold">新台幣 {{ total_price|stringformat:'d' }}元</span>
+                <h6 class="fw-bold">
+                  <span class="fs-4">總計</span>
+                  <span class="float-end text-primary fs-4 fw-semibold">
+
+                    {{ total_price|stringformat:'d' }}元<small>(未稅)</small><br>
+                    <hr>
+                    {{ total_price_tax|stringformat:'d' }}元<small>(含稅)</small>
+                    <h6 class="text-danger fw-semibold ">如需發票，需加5%營業稅</h6>
+                    <h6 class="text-danger fw-semibold">請註明公司行號完整名稱及統一編號</h6>
+                  </span>
                 </h6>
                 <input type="hidden" value="COD" name="payment_mode">
                 <div class="mt-3">

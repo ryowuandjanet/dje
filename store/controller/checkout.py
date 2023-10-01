@@ -25,15 +25,18 @@ def index(request):
 
   cartitems = Cart.objects.filter(user=request.user)
   total_price = 0
+  total_price_tax = 0
   for item in cartitems:
     if item.product_qty >= 100:
       total_price = total_price + item.product.selling_price * item.product_qty
+      total_price_tax = total_price * 1.05
     else:
       total_price = total_price + item.product.original_price * item.product_qty
+      total_price_tax = total_price * 1.05
 
   userprofile = Profile.objects.filter(user=request.user)
 
-  context = { 'cartitems': cartitems, "total_price":total_price,"userprofile":userprofile,"remark":remark}
+  context = { 'cartitems': cartitems, "total_price":total_price,"total_price_tax":total_price_tax,"userprofile":userprofile,"remark":remark}
   return render(request,"store/checkout.html",context)
 
 @login_required(login_url='loginpage')
@@ -48,6 +51,7 @@ def placeorder(request):
       userprofile = Profile()
       userprofile.user = request.user
       userprofile.phone = request.POST.get('phone')
+      userprofile.uniNumber = request.POST.get('uniNumber')
       userprofile.address = request.POST.get('address')
       userprofile.city = request.POST.get('city')
       userprofile.pincode = request.POST.get('pincode')
@@ -57,6 +61,7 @@ def placeorder(request):
     neworder = Order()
     neworder.user = request.user
     neworder.fname = request.POST.get('fname')
+    neworder.uniNumber = request.POST.get('uniNumber')
     neworder.email = request.POST.get('email')
     neworder.phone = request.POST.get('phone')
     neworder.address = request.POST.get('address')
@@ -67,12 +72,24 @@ def placeorder(request):
     neworder.payment_id = request.POST.get('payment_id')
 
     cart = Cart.objects.filter(user = request.user)
+
     cart_total_price = 0
     for item in cart:
       if item.product_qty >= 100:
         cart_total_price = cart_total_price + item.product.selling_price * item.product_qty
+        if neworder.uniNumber:
+          cart_total_price = cart_total_price * 1.05
+        else:
+          cart_total_price = cart_total_price
+
       else:
         cart_total_price = cart_total_price + item.product.original_price * item.product_qty
+        if neworder.uniNumber:
+          cart_total_price = cart_total_price * 1.05
+        else:
+          cart_total_price = cart_total_price
+
+
 
     neworder.total_price = cart_total_price
     
