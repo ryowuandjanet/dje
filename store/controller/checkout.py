@@ -77,21 +77,13 @@ def placeorder(request):
     for item in cart:
       if item.product_qty >= 100:
         cart_total_price = cart_total_price + item.product.selling_price * item.product_qty
-        if neworder.uniNumber:
-          cart_total_price = cart_total_price * 1.05
-        else:
-          cart_total_price = cart_total_price
-
       else:
         cart_total_price = cart_total_price + item.product.original_price * item.product_qty
-        if neworder.uniNumber:
-          cart_total_price = cart_total_price * 1.05
-        else:
-          cart_total_price = cart_total_price
 
-
-
-    neworder.total_price = cart_total_price
+    if neworder.uniNumber:
+      neworder.total_price = cart_total_price * 1.05
+    else:
+      neworder.total_price = cart_total_price
     
     trackno ='bigbear'+str(random.randint(1111111,9999999))
     while Order.objects.filter(tracking_no = trackno) is None:
